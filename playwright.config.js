@@ -14,11 +14,13 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+  globalSetup: '',
+  globalTeardown: '',
   use: {
     // All requests we send go to this API endpoint.
     baseURL: 'https://restful-booker.herokuapp.com/',
     extraHTTPHeaders: {
-      
+
     },
   }
 });
