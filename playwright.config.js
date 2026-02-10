@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test';
+import { env } from './configs/env.js';
 
 /**
  * Read environment variables from file.
@@ -17,11 +18,11 @@ export default defineConfig({
   globalSetup: '',
   globalTeardown: '',
   use: {
-    // All requests we send go to this API endpoint.
-    baseURL: 'https://restful-booker.herokuapp.com/',
+    baseURL: env.baseURL,
     extraHTTPHeaders: {
-
-    },
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
   }
 });
 
