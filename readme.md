@@ -1,3 +1,5 @@
+layered API automation framework using a Service Layer pattern. Tests interact with service classes instead of raw HTTP calls. All requests are routed through a centralized API client for maintainability, token handling, logging, and scalability.
+
 npm install dotenv
 
 playwright-api-framework/
