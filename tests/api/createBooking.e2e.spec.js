@@ -1,5 +1,7 @@
 import { test, expect } from '../../src/fixtures/api.fixture.js';
 import { BookingService } from '../../src/api/services/booking.service.js';
+import { bookingSchema } from '../../src/api/schemas/booking.schema.js';
+import { validateSchema } from '../../src/utils/schemaValidator.js';
 
 test('Create → Get → Delete booking (E2E)', async ({ request, authToken }) => {
 
@@ -30,6 +32,7 @@ test('Create → Get → Delete booking (E2E)', async ({ request, authToken }) =
 
   const getBody = await getResponse.json();
   expect(getBody.firstname).toBe("Sameer");
+  expect(validateSchema(bookingSchema, getBody)).toBeTruthy(); //----Response schema validation
 
   // 3️⃣ Delete
   const deleteResponse = await bookingService.deleteBooking(bookingId);

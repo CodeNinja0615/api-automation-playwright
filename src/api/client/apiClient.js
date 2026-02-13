@@ -22,29 +22,49 @@ export class ApiClient {
     return headers;
   }
 
+  async send(method, url, data = null) {
+    const startTime = Date.now();
+
+    console.log(`\n➡️  ${method.toUpperCase()} ${url}`);
+    if (data) console.log(`Payload:`, data);
+
+    const options = {
+      headers: this.getHeaders(),
+      ...(data && { data })
+    };
+
+    // const response = await this.request[method](url, options);
+
+    let response;
+    let attempts = 3;
+
+    for (let i = 0; i < attempts; i++) {
+      response = await this.request[method](url, options);
+
+      if (response.status() < 500) break;
+
+      console.log(`Retrying... Attempt ${i + 2}`);
+    }
+
+    const duration = Date.now() - startTime;
+    console.log(`⬅️  Status: ${response.status()} | Time: ${duration}ms`);
+
+    return response;
+  }
+
   async get(url) {
-    return await this.request.get(url, {
-      headers: this.getHeaders()
-    });
+    return this.send('get', url);
   }
 
   async post(url, data) {
-    return await this.request.post(url, {
-      data,
-      headers: this.getHeaders()
-    });
+    return this.send('post', url, data);
   }
 
   async put(url, data) {
-    return await this.request.put(url, {
-      data,
-      headers: this.getHeaders()
-    });
+    return this.send('put', url, data);
   }
 
   async delete(url) {
-    return await this.request.delete(url, {
-      headers: this.getHeaders()
-    });
+    return this.send('delete', url);
   }
 }
