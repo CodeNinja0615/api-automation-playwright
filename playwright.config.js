@@ -15,8 +15,12 @@ import { env } from './configs/env.js';
  */
 export default defineConfig({
   testDir: './tests',
-  globalSetup: '',
-  globalTeardown: '',
+  globalSetup: './src/global-setup.js',
+  globalTeardown: './src/global-teardown.js',
+  reporter: [
+    ["list"],
+    ["allure-playwright"]
+  ],
   use: {
     baseURL: env.baseURL,
     extraHTTPHeaders: {

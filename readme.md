@@ -13,6 +13,11 @@ layered API automation framework using a Service Layer pattern. Tests interact w
 
 npm install dotenv
 npm install ajv
+npm install -D allure-playwright
+npm install -g allure-commandline
+npm install --save-dev allure-single-html-file-js
+
+
 
 playwright-api-framework/
 │
