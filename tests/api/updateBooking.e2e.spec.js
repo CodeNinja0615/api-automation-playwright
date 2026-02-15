@@ -3,7 +3,7 @@ import { BookingService } from '../../src/api/services/booking.service.js';
 import { bookingSchema } from '../../src/api/schemas/booking.schema.js';
 import { validateSchema } from '../../src/utils/schemaValidator.js';
 
-test('Create → Get → Delete booking (E2E)', async ({ request, authToken }) => {
+test('Create → Get → Put → Get → Delete booking (E2E)', async ({ request, authToken }) => {
 
   const bookingService = new BookingService(request, authToken);
 
@@ -34,7 +34,7 @@ test('Create → Get → Delete booking (E2E)', async ({ request, authToken }) =
   expect(getBody.firstname).toBe("Sameer");
   expect(validateSchema(bookingSchema, getBody)).toBeTruthy(); //----Response schema validation
 
-  payload['lastname'] = 'king';
+  payload['lastname'] = 'king'; //--Updating payload lastname (but in put should technically be updating entire thing)
   // 3️⃣ Put
   const updateResponse = await bookingService.updateBooking(bookingId, payload);
   expect(updateResponse.status()).toBe(200);
@@ -46,7 +46,6 @@ test('Create → Get → Delete booking (E2E)', async ({ request, authToken }) =
   const updatedGetBody = await updatedGetResponse.json();
   expect(updatedGetBody.lastname).toBe("king");
   expect(validateSchema(bookingSchema, updatedGetBody)).toBeTruthy(); //----Response schema validation
-
 
   // 5️⃣ Delete
   const deleteResponse = await bookingService.deleteBooking(bookingId);

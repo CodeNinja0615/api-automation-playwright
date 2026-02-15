@@ -2,6 +2,11 @@ import { endpoints } from '../routes/endpoints.js';
 import { ApiClient } from '../client/apiClient.js';
 
 export class BookingService {
+  /**
+   * 
+   * @param {import('@playwright/test').Request} request 
+   * @param {string} token 
+   */
   constructor(request, token = null) {
     this.apiClient = new ApiClient(request, token);
   }
