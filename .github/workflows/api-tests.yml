@@ -1,0 +1,47 @@
+name: Playwright API Automation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout repository
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2️⃣ Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3️⃣ Install dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4️⃣ Install Playwright (needed even for API mode)
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+
+      # 5️⃣ Run API Tests
+      - name: Run Playwright Tests
+        run: npx playwright test
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+
+      # 6️⃣ Upload Final Combined HTML Report
+      - name: Upload Final HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: complete.html
