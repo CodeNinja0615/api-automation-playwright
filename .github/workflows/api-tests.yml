@@ -31,6 +31,13 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
 
+      # 5️⃣ Setup Java (required for Allure)
+      - name: Setup Java (required for Allure)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
       # 5️⃣ Run API Tests
       - name: Run Playwright Tests
         run: npx playwright test
@@ -38,10 +45,24 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           USERNAME: ${{ secrets.USERNAME }}
           PASSWORD: ${{ secrets.PASSWORD }}
+      # 6️⃣ Generate Allure Report (from `allure-results`) 
 
-      # 6️⃣ Upload Final Combined HTML Report
+      # 7️⃣ Upload Final Combined HTML Report (combined by global teardown)
+      - name: Check for combined report
+        id: check_complete
+        run: |
+          if [ -f allure-report/complete.html ]; then echo "exists=true" >> $GITHUB_OUTPUT; else echo "exists=false" >> $GITHUB_OUTPUT; fi
+
       - name: Upload Final HTML Report
+        if: steps.check_complete.outputs.exists == 'true'
         uses: actions/upload-artifact@v4
         with:
-          name: allure-report
-          path: complete.html
+          name: allure-report-complete-html
+          path: allure-report/complete.html
+
+      - name: Upload Allure raw results fallback
+        if: steps.check_complete.outputs.exists == 'false'
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results

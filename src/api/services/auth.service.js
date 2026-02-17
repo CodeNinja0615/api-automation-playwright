@@ -3,6 +3,10 @@ import { ApiClient } from '../client/apiClient.js';
 import { env } from '../../../configs/env.js';
 
 export class AuthService {
+  /**
+   * 
+   * @param {import('@playwright/test').APIRequestContext} request 
+   */
   constructor(request) {
     this.apiClient = new ApiClient(request);
   }

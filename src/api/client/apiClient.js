@@ -1,7 +1,7 @@
 export class ApiClient {
   /**
    * 
-   * @param {import("@playwright/test").Request} request 
+   * @param {import("@playwright/test").APIRequestContext} request 
    * @param {string} token 
    */
   constructor(request, token = null) {
