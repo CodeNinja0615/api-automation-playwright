@@ -54,7 +54,7 @@ jobs:
       - name: Check for combined report
         id: check_complete
         run: |
-          if [ -f complete.html ]; then echo "exists=true" >> $GITHUB_OUTPUT; else echo "exists=false" >> $GITHUB_OUTPUT; fi
+          if [ -f allure-report/complete.html ]; then echo "exists=true" >> $GITHUB_OUTPUT; else echo "exists=false" >> $GITHUB_OUTPUT; fi
 
       # 9️⃣ Upload Final HTML Report
       - name: Upload Final HTML Report
@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report-complete-html
-          path: complete.html
+          path: allure-report/complete.html
 
       # 🔟 Fallback
       - name: Upload Allure raw results fallback
