@@ -34,9 +34,9 @@ test('Create → Get → Put → Get → Delete booking (E2E)', async ({ request
   expect(getBody.firstname).toBe("Sameer");
   expect(validateSchema(bookingSchema, getBody)).toBeTruthy(); //----Response schema validation
 
-  payload['lastname'] = 'king'; //--Updating payload lastname with PATCH call
+  payload['lastname'] = 'king'; //--Replacing payload lastname with PUT call (should replace entire payload)
   // 3️⃣ Put
-  const updateResponse = await bookingService.updateBooking(bookingId, payload);
+  const updateResponse = await bookingService.replaceBooking(bookingId, payload);
   expect(updateResponse.status()).toBe(200);
 
   // 4️⃣ Get after update booking

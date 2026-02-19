@@ -64,6 +64,10 @@ export class ApiClient {
     return this.send('put', url, data);
   }
 
+  async patch(url, data) {
+    return this.send('patch', url, data);
+  }
+
   async delete(url) {
     return this.send('delete', url);
   }

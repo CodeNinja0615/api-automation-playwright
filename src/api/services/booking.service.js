@@ -24,6 +24,10 @@ export class BookingService {
   }
 
   async updateBooking(id, payload) {
+    return await this.apiClient.patch(`${endpoints.BOOKING}/${id}`, payload);
+  }
+
+  async replaceBooking(id, payload) {
     return await this.apiClient.put(`${endpoints.BOOKING}/${id}`, payload);
   }
 
