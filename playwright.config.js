@@ -17,6 +17,7 @@ export default defineConfig({
   testDir: './tests',
   globalSetup: './src/global-setup.js',
   globalTeardown: './src/global-teardown.js',
+  workers: 1,
   reporter: [
     ["list"],
     ["allure-playwright"]
