@@ -1,0 +1,14 @@
+{
+  "bookingid": 999,
+  "booking": {
+    "firstname": "Sameer",
+    "lastname": "Akhtar",
+    "totalprice": 111,
+    "depositpaid": true,
+    "bookingdates": {
+      "checkin": "2024-01-01",
+      "checkout": "2024-01-05"
+    },
+    "additionalneeds": "Breakfast"
+  }
+}

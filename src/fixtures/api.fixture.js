@@ -1,5 +1,12 @@
 import { test as base } from '@playwright/test';
 import { AuthService } from '../api/services/auth.service.js';
+import { enableMocks } from "../mocks/mockRoutes.js";
+
+test.beforeEach(async ({ page }) => {
+  if (process.env.ENV === "mock") {
+    await enableMocks(page);
+  }
+});
 
 export const test = base.extend({
   authToken: async ({ request }, use) => {
@@ -9,7 +16,8 @@ export const test = base.extend({
     await use(token);
   }
 });
-test.afterEach(async ({}, testInfo) => {
+
+test.afterEach(async ({ }, testInfo) => {
   const status = testInfo.status;
   const title = testInfo.title;
   const file = testInfo.file;
