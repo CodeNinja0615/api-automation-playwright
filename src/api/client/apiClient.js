@@ -1,3 +1,4 @@
+import { mockRequest } from "../../mocks/mockHandler.js";
 export class ApiClient {
   /**
    * 
@@ -34,6 +35,13 @@ export class ApiClient {
     };
 
     // const response = await this.request[method](url, options);
+    if (process.env.ENV === "mock") {
+      const mock = await mockRequest(method.toUpperCase(), url, options?.data);
+      return {
+        status: () => mock.status,
+        json: async () => mock.body
+      };
+    }
 
     let response;
     let attempts = 3;
